@@ -24,6 +24,7 @@ var webAudioPeakMeter = (function() {
   var channelPeakLabels = [];
   var maskSizes = [];
   var textLabels = [];
+  var animationFrame;
 
   var getBaseLog = function(x, y) {
     return Math.log(y) / Math.log(x);
@@ -258,12 +259,16 @@ var webAudioPeakMeter = (function() {
       }
       channelPeakLabels[i].textContent = textLabels[i];
     }
-    window.requestAnimationFrame(paintMeter);
+    animationFrame = window.requestAnimationFrame(paintMeter);
   };
+  
+  var cancelAnimationFrame = function() {
+    window.cancelAnimationFrame(animationFrame);
+  }
 
   return {
     createMeterNode: createMeterNode,
-    createMeter: createMeter,
+    createMeter: createMeter, cancelAnimationFrame,
   };
 })();
 
